@@ -1,0 +1,47 @@
+
+html {
+background: url(https://encrypted-tbn3.gstatic.com/images?q=tbn:ANd9GcQiXLRV5lgSQQEFLEq8GMzOmTGUgD6-1Hjeh0brz_DVZU08ETVxwg) no-repeat center center fixed;
+    background-size: cover;
+}   
+
+/*body {
+	background-color: #A0A0A0;
+
+}
+*/
+h1 {
+		color: black;
+        text-align: center;
+        font-family: 'Pacifico', cursive;
+        font-weight: 900;
+        font-size: 400%;
+}
+
+.container {
+    background: rgb(255,255,255); /* Fallback */
+    background: rgba(255,255,255, 0.3);
+}
+
+#post_head{
+	    color: black;
+        text-align: center;
+        font-family: 'Bangers', cursive;
+        font-weight: 900;
+        font-size: 400%;
+}
+#para_details{
+	    text-align: center;
+	    font-weight: 700;
+	    font-family: 'Righteous', cursive;
+	    font-size: 150%;
+}
+
+.for_comments {
+	color: black;
+        
+        font-family: 'Lobster', cursive;
+        font-weight: 900;
+        font-size: 150%;
+}
+
+

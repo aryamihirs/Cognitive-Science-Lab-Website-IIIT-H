@@ -1,0 +1,72 @@
+<html>
+<head>
+<title>View Blog</title>
+<meta charset='utf-8'>
+   <meta http-equiv="X-UA-Compatible" content="IE=edge">
+   <meta name="viewport" content="width=device-width, initial-scale=1">
+   <link rel="stylesheet" href="/static/labs/css/styles.css">
+   <script src="http://code.jquery.com/jquery-latest.min.js" type="text/javascript"></script>
+   <script src="/static/labs/js/script.js"></script>
+   <link rel="stylesheet" id="basic-css" href="/static/labs/cogsci/basic.css" type="text/css" media="all">
+<link href='https://fonts.googleapis.com/css?family=Bangers' rel='stylesheet' type='text/css'>
+<link href='https://fonts.googleapis.com/css?family=Lobster' rel='stylesheet' type='text/css'>
+<link href='https://fonts.googleapis.com/css?family=Righteous' rel='stylesheet' type='text/css'>
+</head>
+
+<body>
+<div id='cssmenu'>
+<ul>
+   <li><a href = '#' ><span>Home</span></a></li>
+   <li><a href = '/labs/about'><span>About us</span></a></li>
+   <li><a href = '/labs/contact'><span>Contact Us</span></a></li>
+   <li class='active' class='last'><a href = '/labs/posts'><span>Blog</span></a></li>
+   <li><a href = '/labs/name'><span>Search</span></a></li>
+   <li><a href = '/labs/subscribe'><span>Subscribe</span></a></li>
+   <li class='last'><a href = '/labs/volunteer'><span>Volunteer Form</span></a></li>
+</ul>
+</div>
+<h2 id="post_head">{{ my_post.post_title }}</h2>
+<hr>
+<div class="container">
+<p id="para_details">{{ my_post.post_text }}</p>
+</div>
+<hr>
+
+{% for comment in comments %}
+	{% if comment.name_of_person %}
+		<h5>{{comment.name_of_person}}</h5>
+	{% else %}
+		<h5> Anonymous </h5>
+	{% endif %}
+	<p>{{comment.comment_text}}</p>
+{% endfor %}
+
+
+<h3 class="for_comments">Enter a comment.</h3>
+<form action = "/labs/posts/details/{{my_post.id}}/" method = "post">
+{% csrf_token %}
+
+	<label for="id_name_of_person" class="for_comments">Full Name</label>
+	<br>
+	<input id="id_name_of_person" type="text" name="name_of_person" maxlength="40"></input>
+
+	<br>
+
+	<label for="id_comment_text" class="for_comments">Comment Text</label>
+	<br>
+	<textarea id="id_comment_text" rows="10" name="comment_text" maxlength="500" cols="40"></textarea>
+
+	<br></br>
+
+	<span class="helptext"></span>
+		<input type="submit" value="Submit" />
+</form>
+
+
+</body>
+</html>
+
+
+
+
+

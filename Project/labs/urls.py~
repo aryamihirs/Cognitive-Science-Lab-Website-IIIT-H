@@ -1,0 +1,18 @@
+from django.conf.urls import url
+
+from . import views
+
+urlpatterns=[
+	url(r'^$', views.mainpage, name='mainpage'),
+	url(r'^index', views.index, name='index'),
+	url(r'^about', views.about, name='about'),
+	url(r'^posts/(?P<page_number>[0-9]+)/$', views.posts, name='posts'),
+	url(r'^posts/$', views.redirect_posts, name='redirect_posts'),	
+#	url(r'^posts/(?P<professor_name>[a-z]+)/1', views.prof_posts, name='prof_posts'),
+	url(r'^posts/details/(?P<post_number>[0-9]+)/$', views.details, name='details'),
+	url(r'^comments/(?P<page_number>[0-9]+)/$', views.comments, name='comments'),
+	url(r'^comments/$', views.redirect_comments, name='redirect_comments'),	
+	url(r'^subscribe', views.subscribe, name='subscribe'),
+	url(r'^name', views.get_name, name='get_name'),
+	url(r'^volunteer', views.volunteer, name='volunteer'),	
+]

@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Create HTML5 Canvas JavaScript Game Character Example</title>
+    <!--[if IE]><script type="text/javascript" src="excanvas.js"></script><![endif]-->
+        <script type="text/javascript" src="html5-canvas-game-character-2.js"></script>
+            <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.6.1/jquery.min.js"></script>
+            <script type="text/javascript">
+      $(document).ready(function() {
+        $(document).keydown(function(e) {
+          if (e.keyCode == '32') {
+            jump();
+          }
+        });
+      });
+    </script>
+
+  </head>
+  <body>
+    <div id="canvasDiv"></div>
+        <script type="text/javascript">
+      prepareCanvas(document.getElementById("canvasDiv"), 490, 220);
+    //document.getElementById("canvasDiv").onmousedown = function() { 
+      //jump(); }
+    //document.getElementById("canvasDiv").onkeyup = function(e){
+    //if(e.keyCode == 32){
+     // jump();     
+    //}
+  //}
+ //$('input:text').keypress(function(e) {
+  // if (e.keyCode == 0 || e.keyCode == 32) // `0` works in mozilla and `320 in other`
+   //  console.log('space pressed');
+//});
+    </script>
+  </body>
+</html>

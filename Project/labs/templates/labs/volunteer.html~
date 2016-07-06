@@ -1,0 +1,56 @@
+<h1>Volunteer Form</h1>
+
+
+<form action="/labs/volunteer/" method="post">
+	{% csrf_token %}
+		<input type='hidden' name='csrfmiddlewaretoken' value='PwBIZbTAkKp0GSYE9sDcJUnN7VPe7CnN' />
+	<tr><th><br><br><label for="id_Name">Name:</label></th><td>
+		<br><input id="id_Name" maxlength="60" name="Name" type="text" /></td></tr>
+<tr><th><br><br><br><label for="id_Mail_id">Mail id:</label></th><td>
+	<br><input id="id_Mail_id" maxlength="60" name="Mail_id" type="email" /></td></tr>
+<tr><th><br><br><br><label for="id_Mobile_number">Mobile number:</label></th><td>
+	<br><input id="id_Mobile_number" maxlength="15" name="Mobile_number" type="text" /></td></tr>
+<tr><th><br><br><br><label for="id_Date_of_birth">Date of birth:</label></th><td>
+	<br><input id="id_Date_of_birth" name="Date_of_birth" type="text" /></td></tr>
+<tr><th><br><br><br><label for="id_Gender">Gender:</label></th><td>
+	<br><select id="id_Gender" name="Gender">
+<option value="M" selected="selected">Male</option>
+<option value="F">Female</option>
+</select></td></tr>
+<tr><th><br><br><br><label for="id_Occupation_status">Occupation status:</label></th><td>
+	<br><select id="id_Occupation_status" name="Occupation_status">
+<option value="Student" selected="selected">Student</option>
+<option value="Service">Service Man</option>
+<option value="Business">Business Man</option>
+<option value="Doctor">Doctor</option>
+<option value="Teacher">Teacher</option>
+<option value="Unemployed">Unemployed</option>
+</select></td></tr>
+<tr><th><br><br><br><label for="id_Lab_you_want_to_contribute_in">Lab you want to contribute in:</label></th><td>
+	<br><select id="id_Lab_you_want_to_contribute_in" name="Lab_you_want_to_contribute_in">
+<option value="a" selected="selected">a</option>
+<option value="b">b</option>
+<option value="c">c</option>
+<option value="d">d</option>
+</select></td></tr>
+<tr><th><br><br><br><label for="id_How_do_you_plan_to_contribute">How do you plan to contribute:</label></th><td>
+	<br><textarea cols="40" id="id_How_do_you_plan_to_contribute" maxlength="6000" name="How_do_you_plan_to_contribute" rows="10">
+</textarea></td></tr>
+<tr><th><br><br><br><label for="id_Transportation_plans">Transportation plans:</label></th><td>
+	<br><select id="id_Transportation_plans" name="Transportation_plans">
+<option value="Public" selected="selected">Public Transport</option>
+<option value="Private Vehicle">Private Vehicle</option>
+<option value="Bicycle">Bicycle</option>
+<option value="Walk">Walk</option>
+<option value="Others">Others</option>
+</select></td></tr>
+<tr><th><br><br><br><label for="id_Handedness">Handedness:</label></th><td>
+	<br><select id="id_Handedness" name="Handedness">
+<option value="Left">Left</option>
+<option value="Right" selected="selected">Right</option>
+</select></td></tr>
+<tr><th>
+	<br><br><br><label for="id_Nationality">Nationality:</label></th><td><input id="id_Nationality" maxlength="20" name="Nationality" type="text" /></td></tr>
+<br><input type="submit" value="Submit" />
+</form>
+

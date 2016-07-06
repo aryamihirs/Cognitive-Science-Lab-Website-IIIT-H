@@ -1,0 +1,174 @@
+from django.shortcuts import render
+from django.http import HttpResponse,HttpResponseRedirect
+from django.shortcuts import get_object_or_404
+from django.core.urlresolvers import reverse
+
+#importing models from models and forms.
+from .models import Post, Comment, Subscriber, About, Volunteer
+from .models import SubscriberForm, CommentForm, VolunteerForm
+from .forms import NameForm
+
+from django.core.mail import send_mail, BadHeaderError
+from django.db.models import Q
+   
+from variables import *
+
+#function to validate page numbers for posts and comments.
+def validate_page_number(page_number, size, items_per_page):
+	if page_number <= 1:
+		return 1
+	else:
+		number_of_pages = size/items_per_page
+		if size%items_per_page != 0:
+			number_of_pages += 1
+		if page_number > number_of_pages:
+			page_number = number_of_pages
+		return page_number
+
+
+def validate_text(_string):
+	for word in rmv_words:
+		if word in _string:
+			return 0
+	return 1
+
+def send_email(request):
+    subject = request.POST.get('test mail', '')
+    message = request.POST.get('just a test.', '')
+    from_email = request.POST.get('abhishekgarg119@gmail.com', '')
+    if subject and message and from_email:
+        try:
+            send_mail(subject, message, from_email, ['abhishekgarg119@ggmail.com'])
+        except BadHeaderError:
+            return HttpResponse('Invalid header found.')
+        return HttpResponseRedirect('/labs/posts')
+    else:
+        # In reality we'd use a form class
+        # to get proper validation errors.
+        return HttpResponse('Make sure all fields are entered and valid.')
+
+#the mainpage(coverpage) of the website.
+def mainpage(request):
+	return render (request, 'labs/mainpage.html', {})
+
+#temporary for now.
+def index(request):
+	posts_list = Post.objects.order_by('-pub_date')[:5]
+	context = {'posts_list': posts_list}
+	return render (request, 'labs/index.html' ,context)
+#	return render(request, 'labs/index.html', {})
+
+#gives answers to some of the frequently asked questions
+def about(request):
+	about_list = About.objects.order_by('-time_added')[::-1]
+	context = {'about_list' : about_list}
+	return render (request, 'labs/about.html', context)
+
+#lists all the posts
+def posts(request,page_number):
+	page_number = int(page_number)
+	page_number = validate_page_number(page_number, Post.objects.count(), posts_per_page)
+	start_post = posts_per_page * (page_number-1)
+	posts_list = Post.objects.order_by ('-pub_date') [start_post : start_post + posts_per_page]
+	profs = Post.objects.all().values("professor_name").distinct()
+	context = {'posts_list' : posts_list, 'profs' : profs}
+	return render (request, 'labs/posts.html', context)
+	
+#if u type posts in url, u are redirected to page with 5 most recent of them.
+def redirect_posts (request):
+	return HttpResponseRedirect('/labs/posts/1')
+	
+#this page has a form to comment and also lists down comments.
+def comments(request, page_number):
+	if request.method == 'POST':
+		form = CommentForm(request.POST)
+		if form.is_valid():
+			my_comment = form.save(commit = False)
+			if validate_text(my_comment.comment_text) and validate_text(my_comment.name_of_person):
+				my_comment.verified = 1
+			else:
+				my_comment.verified = 0
+			my_comment.save()
+			return HttpResponseRedirect('/labs/comments/1')
+	else:
+		form = CommentForm()
+		page_number = int(page_number)
+		verified_comment_list = Comment.objects.order_by('-time_posted').filter(verified = 1)
+		page_number = validate_page_number(page_number, len(verified_comment_list), comments_per_page)
+		start_comment = comments_per_page * (page_number - 1)
+		comments_list = verified_comment_list[start_comment : start_comment + comments_per_page]
+		context = {'comments_list': comments_list, 'form':form}
+	return render(request, 'labs/comments.html', context)
+
+#redirects to first page of comments.
+def redirect_comments(request):
+	return HttpResponseRedirect ('/labs/comments/1')
+
+#this page shows details of the selected post.
+def details (request, post_number):
+	post_number = int(post_number)
+	if request.method == 'POST':
+		form = CommentForm(request.POST)
+		if form.is_valid():
+			my_comment = form.save(commit = False)
+			if validate_text(my_comment.comment_text) and validate_text(my_comment.name_of_person):
+				my_comment.verified = 1
+			else:
+				my_comment.verified = 0
+			my_post = get_object_or_404(Post, id = post_number)
+			my_comment.post = my_post
+			my_comment.save()
+			return HttpResponseRedirect('/labs/posts/')
+	else :
+		my_post = get_object_or_404(Post, id = post_number)
+		form = CommentForm()
+		comments = my_post.comment_set.order_by('-time_posted').filter(verified = 1)
+		context = {'my_post' : my_post, 'form' : form, 'comments' : comments}
+		return render(request, 'labs/details.html', context)
+
+#a form to subscribe for the newsletter, not completely functional now.
+def subscribe(request):
+    if request.method == 'POST':
+        form = SubscriberForm(request.POST)
+        if form.is_valid():
+            form.save()
+            #send_mail('Subject here', 'Here is the message.', 'abhishekgarg119@gmail.com',
+            #['abhishekgarg119@gmail.com'], fail_silently=False)
+            return HttpResponseRedirect('/labs/posts/1')
+
+    # if a GET (or any other method) we'll create a blank form
+    else:
+        form = SubscriberForm()
+
+    return render(request, 'labs/subscribe.html', {'form': form})
+
+#page to search for a name in posts, has many issues.
+def get_name(request):
+	if request.method == 'POST':
+		form = NameForm(request.POST)
+		if form.is_valid():
+			obj = request.POST.get('search_for')         #request.GET['section']
+			temp = Post.objects.filter(Q(post_title__contains = obj)
+					| Q(post_text__contains = obj) 
+					| Q(professor_name__contains = obj)).order_by('pub_date')
+			return render(request, 'labs/name.html', {'temp' : temp, 'form' : form})
+	else:
+		form = NameForm()
+	
+	return render(request, 'labs/name.html',{'form':form})
+
+def volunteer(request):
+	if request.method == 'POST':
+		form = VolunteerForm(request.POST)
+		if form.is_valid():
+			form.save()
+			return HttpResponseRedirect('/labs/posts')
+	else:
+		form = VolunteerForm()
+	return render(request, 'labs/volunteer.html', {'form' : form})
+	
+def contact(request):
+	context = {'contact_number' : contact_number, 'contact_id' : contact_id, 'address' : address}
+	return render (request, 'labs/contact.html', context)
+	
+	

@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Contact Us Page.!</title>
+	<link rel="stylesheet" id="basic-css" href="/static/labs/cogsci/basic.css" type="text/css" media="all">
+<link href='https://fonts.googleapis.com/css?family=Pacifico' rel='stylesheet' type='text/css'>
+<meta charset='utf-8'>
+   <meta http-equiv="X-UA-Compatible" content="IE=edge">
+   <meta name="viewport" content="width=device-width, initial-scale=1">
+   <link rel="stylesheet" href="/static/labs/css/styles.css">
+   <script src="http://code.jquery.com/jquery-latest.min.js" type="text/javascript"></script>
+   <script src="/static/labs/js/script.js"></script>
+</head>
+<body>
+
+<div id='cssmenu'>
+<ul>
+   <li><a href = '#' ><span>Home</span></a></li>
+   <li><a href = '/labs/about'><span>About us</span></a></li>
+   <li class='active'><a href = '/labs/contact'><span>Contact Us</span></a></li>
+   <li><a href = '/labs/posts'><span>Blog</span></a></li>
+   <li><a href = '/labs/name'><span>Search</span></a></li>
+   <li><a href = '/labs/subscribe'><span>Subscribe</span></a></li>
+   <li class='last'><a href = '/labs/volunteer'><span>Volunteer Form</span></a></li>
+</ul>
+</div>
+<h1>Contact Us!</h1>
+<hr>
+<p> Contact Number : {{contact_number}}</p>
+<p> Email id : {{contact_id}} </p>
+<p> Address : {{address}}</p>
+
+</body>
+</html>

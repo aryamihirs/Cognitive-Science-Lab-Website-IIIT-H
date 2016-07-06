@@ -1,0 +1,14 @@
+html {
+background: url(/static/labs/images/blog.jpg) no-repeat center center fixed;
+	    background-size: cover;
+
+}
+
+h1 {
+color: #7ad4b7;
+       text-align: center;
+       font-family: 'Pacifico', cursive;
+       font-weight: 900;
+       font-size: 400%;
+}
+

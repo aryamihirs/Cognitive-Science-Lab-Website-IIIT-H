@@ -1,0 +1,13 @@
+html {
+background: url(/static/labs/images/about.jpg) no-repeat center center fixed;
+	    background-size:cover;
+}
+
+h1 {
+color: black;
+       text-align: center;
+       font-family: 'Pacifico', cursive;
+       font-weight: 900;
+       font-size: 400%;
+} 
+
