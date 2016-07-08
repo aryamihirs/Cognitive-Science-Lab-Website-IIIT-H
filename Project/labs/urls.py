@@ -3,8 +3,7 @@ from django.conf.urls import url
 from . import views
 
 urlpatterns=[
-	url(r'^$', views.index, name='index'),
-	url(r'^home$', views.home, name='home'),
+	url(r'^$', views.contact, name='contact'),
 	url(r'^about', views.about, name='about'),
 	url(r'^posts/(?P<page_number>[0-9]+)/$', views.posts, name='posts'),
 	url(r'^posts/$', views.redirect_posts, name='redirect_posts'),	
